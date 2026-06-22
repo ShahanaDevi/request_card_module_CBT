@@ -25,18 +25,8 @@
         "aadhar": "987654321012",
         "pan": "FGHIJ5678K",
         "cards": [
-            {
-                "cardType": "Credit",
-                "cardNumber": "4444333322221111",
-                "isactive": true,
-                "expirationDate": "2027-06-30"
-            },
-            {
-                "cardType": "Debit",
-                "cardNumber": "3669995115319238",
-                "isactive": true,
-                "expirationDate": "2029-06-19"
-            }
+            [],
+            []
         ]
     },
     "1009012": {
@@ -50,11 +40,17 @@
                 "cardNumber": "6666777788889999",
                 "isactive": true,
                 "expirationDate": "2026-06-20"
+            },
+            {
+                "cardType": "Credit",
+                "cardNumber": "1176425719320431",
+                "isactive": true,
+                "expirationDate": "2029-06-22"
             }
         ]
     },
     "1013456": {
-        "name": "keerthi",
+        "name": "sneha",
         "mobile": "9871234567",
         "aadhar": "789012345678",
         "pan": "PQRST1234U",

@@ -16,8 +16,6 @@ class CardRequest
 	{
 		$content = file_get_contents('Account_details.json');
 		$this->accounts = json_decode($content, true) ?? [];
-		// customer object
-		// card object
 	}
 
 	/**
@@ -32,9 +30,9 @@ class CardRequest
 
 		$this->displayCustomer($_customer);
 
-		$_choice = $this->showMenu();
+		$choice = $this->showMenu();
 
-		switch ($_choice) {
+		switch ($choice) {
 			case 1:
 				$this->requestDebitCard($_customer);
 				break;
@@ -45,10 +43,6 @@ class CardRequest
 
 			case 3:
 				$this->requestCreditCard($_customer);
-				break;
-
-			case 4:
-				$this->updateCustomer($_customer);
 				break;
 
 			default:
@@ -119,7 +113,6 @@ class CardRequest
 		echo "\n1. New Debit Card Request\n";
 		echo "2. Update Customer Details\n";
 		echo "3. New Credit Card Request\n";
-		echo "4. Update Customer Details\n";
 
 		return (int) readline("Enter your choice: ");
 	}
@@ -133,9 +126,8 @@ class CardRequest
 	{
 		$cards = $_customer->getCards();
 
-		foreach ($cards as $index => $card_data) {
+		foreach ($cards as $card) {
 
-			$card = Card::fromArray($card_data);
 			if ($card->getCardType() === 'Debit' && $card->isActive()) {
 				$days_left = floor((strtotime($card->getExpirationDate()) - time()) / (60 * 60 * 24));
 
@@ -144,17 +136,11 @@ class CardRequest
 					return;
 				}
 
-				$card->setActive('false');
-				$cards[$index]['isactive'] = false;
+				$card->setActive(false);
 			}
 		}
 
-		$cards[] = [
-			'cardType' => 'Debit',
-			'cardNumber' => (string) rand(1000000000000000, 9999999999999999),
-			'isactive' => true,
-			'expirationDate' => date('Y-m-d', strtotime('+3 years'))
-		];
+		$cards[] = new Card('Debit', (string) rand(1000000000000000, 9999999999999999), true, date('Y-m-d', strtotime('+3 years')));
 
 		$_customer->setCards($cards);
 
@@ -170,25 +156,20 @@ class CardRequest
 	{
 		$cards =  $_customer->getCards();
 
-		foreach ($cards as $index => $card) {
-			if ($card['cardType'] === 'Credit' && !empty($card['isactive'])) {
-				$days_left = floor((strtotime($card['expirationDate']) - time()) / (60 * 60 * 24));
+		foreach ($cards as  $card) {
+			if ($card->getCardType() === 'Credit' && $card->isActive()) {
+				$days_left = floor((strtotime($card->getExpirationDate()) - time()) / (60 * 60 * 24));
 
 				if ($days_left > 30) {
 					echo "You already have an active Credit Card. \n";
 					return;
 				}
 
-				$cards[$index]['isactive'] = false;
+				$card->setActive(false);
 			}
 		}
 
-		$cards[] = [
-			'cardType' => 'Credit',
-			'cardNumber' => (string) rand(1000000000000000, 9999999999999999),
-			'isactive' => true,
-			'expirationDate' => date('Y-m-d', strtotime('+3 years'))
-		];
+		$cards[] = new Card('Credit', (string) rand(1000000000000000, 9999999999999999), true, date('Y-m-d', strtotime('+3 years')));
 
 		$_customer->setCards($cards);
 

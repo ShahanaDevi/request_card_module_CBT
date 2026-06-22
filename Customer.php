@@ -1,6 +1,6 @@
 <?php
 
-class customer
+class Customer
 {
 	public const ACCOUNT_NUMBER = 'accountNo';
 	public const NAME = 'name';
@@ -8,7 +8,7 @@ class customer
 	public const AADHAR = 'aadhar';
 	public const PAN = 'pan';
 	public const CARDS = 'cards';
-	
+
 
 	private string $account_number;
 	private string $name;
@@ -29,17 +29,28 @@ class customer
 
 	public static function fromArray(string $account_number, array $data): Customer
 	{
-		return new Customer($account_number, $data[self::NAME], $data[self::MOBILE], $data[self::AADHAR], $data[self::PAN ], $data[self::CARDS]);
+		$cards = [];
+
+		foreach ($data[self::CARDS] as $card_data) {
+			$cards[] = Card::fromArray($card_data);
+		}
+
+		return new Customer($account_number, $data[self::NAME], $data[self::MOBILE], $data[self::AADHAR], $data[self::PAN], $cards);
 	}
 
 	public function toArray(): array
 	{
+		$cards = [];
+
+		foreach ($this->cards as $card) {
+			$cards[] = $card->toArray();
+		}
 		return [
 			self::NAME => $this->name,
 			self::MOBILE => $this->mobile,
 			self::AADHAR => $this->aadhar,
 			self::PAN => $this->pan,
-			self::CARDS => $this->cards
+			self::CARDS => $cards
 		];
 	}
 
@@ -82,3 +93,5 @@ class customer
 		$this->cards = $cards;
 	}
 }
+
+?>

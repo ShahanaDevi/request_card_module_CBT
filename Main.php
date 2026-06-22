@@ -4,14 +4,12 @@ require_once 'CardRequest.php';
 
 class Main
 {
-		public function start()
-		{
-			$cardRequest = new CardRequest();
-			$cardRequest->run();
-
-		}
+	public function start()
+	{
+		$cardRequest = new CardRequest();
+		$cardRequest->run();
+	}
 }
 
 $obj = new Main();
 $obj->start();
-?>
