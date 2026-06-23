@@ -4,6 +4,7 @@
         "mobile": "9876543210",
         "aadhar": "123456789012",
         "pan": "ABCDE1234F",
+        "account_number": "1001234",
         "cards": [
             {
                 "cardType": "Credit",
@@ -25,8 +26,18 @@
         "aadhar": "987654321012",
         "pan": "FGHIJ5678K",
         "cards": [
-            [],
-            []
+            {
+                "cardType": "Debit",
+                "cardNumber": "6316910244191271",
+                "isactive": true,
+                "expirationDate": "2029-06-23"
+            },
+            {
+                "cardType": "Credit",
+                "cardNumber": "1106316905417931",
+                "isactive": true,
+                "expirationDate": "2029-06-23"
+            }
         ]
     },
     "1009012": {
@@ -38,7 +49,7 @@
             {
                 "cardType": "Debit",
                 "cardNumber": "6666777788889999",
-                "isactive": true,
+                "isactive": false,
                 "expirationDate": "2026-06-20"
             },
             {
@@ -46,6 +57,12 @@
                 "cardNumber": "1176425719320431",
                 "isactive": true,
                 "expirationDate": "2029-06-22"
+            },
+            {
+                "cardType": "Debit",
+                "cardNumber": "1841883499714988",
+                "isactive": true,
+                "expirationDate": "2029-06-23"
             }
         ]
     },

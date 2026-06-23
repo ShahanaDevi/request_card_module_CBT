@@ -1,5 +1,8 @@
 <?php
 
+require_once 'DebitCard.php';
+require_once 'CreditCard.php';
+
 class Customer
 {
 	public const ACCOUNT_NUMBER = 'accountNo';
@@ -32,7 +35,11 @@ class Customer
 		$cards = [];
 
 		foreach ($data[self::CARDS] as $card_data) {
-			$cards[] = Card::fromArray($card_data);
+			if ($card_data['cardType'] === 'Debit') {
+				$cards[] = DebitCard::fromArray($card_data);
+			} else {
+				$cards[] = CreditCard::fromArray($card_data);
+			}
 		}
 
 		return new Customer($account_number, $data[self::NAME], $data[self::MOBILE], $data[self::AADHAR], $data[self::PAN], $cards);
@@ -93,5 +100,3 @@ class Customer
 		$this->cards = $cards;
 	}
 }
-
-?>

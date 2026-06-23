@@ -140,7 +140,7 @@ class CardRequest
 			}
 		}
 
-		$cards[] = new Card('Debit', (string) rand(1000000000000000, 9999999999999999), true, date('Y-m-d', strtotime('+3 years')));
+		$cards[] = new DebitCard(Card::generateCardNumber(), true, date('Y-m-d', strtotime('+3 years')));
 
 		$_customer->setCards($cards);
 
@@ -169,7 +169,7 @@ class CardRequest
 			}
 		}
 
-		$cards[] = new Card('Credit', (string) rand(1000000000000000, 9999999999999999), true, date('Y-m-d', strtotime('+3 years')));
+		$cards[] = new CreditCard(Card::generateCardNumber(), true, date('Y-m-d', strtotime('+3 years')));
 
 		$_customer->setCards($cards);
 
