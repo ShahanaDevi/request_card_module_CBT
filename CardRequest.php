@@ -2,10 +2,13 @@
 
 require_once 'Customer.php';
 require_once 'Card.php';
+require_once 'ValidationTrait.php';
+
 
 class CardRequest
 {
 
+	use ValidationTrait;
 	private array $accounts = [];
 
 	/**
@@ -15,7 +18,15 @@ class CardRequest
 	public function __construct()
 	{
 		$content = file_get_contents('Account_details.json');
-		$this->accounts = json_decode($content, true) ?? [];
+		$customers = json_decode($content, true) ?? [];
+
+		foreach ($customers as $customer) {
+			// $customer
+			$account_number = $customer[Customer::ACCOUNT_NUMBER];
+			unset($customer[Customer::ACCOUNT_NUMBER]);
+
+			$this->accounts[$account_number] = $customer;
+		}
 	}
 
 	/**
@@ -27,6 +38,8 @@ class CardRequest
 		$_user = $this->getUserInput();
 
 		$_customer = $this->validateCustomer($_user);
+
+		// var_dump($_customer);die;
 
 		$this->displayCustomer($_customer);
 
@@ -83,7 +96,7 @@ class CardRequest
 
 		$_record = $this->accounts[$_user[Customer::ACCOUNT_NUMBER]];
 
-		if (strtolower(trim($_user[Customer::NAME])) !== strtolower(trim($_record[Customer::NAME]))) {
+		if (!$this->isNameMatch($_user[Customer::NAME], $_record[Customer::NAME])) {
 			exit("Name does not match our records.\n");
 		}
 
@@ -207,6 +220,11 @@ class CardRequest
 	{
 		$this->accounts[$_customer->getAccountNumber()] = $_customer->toArray();
 
-		file_put_contents('Account_details.json', json_encode($this->accounts, JSON_PRETTY_PRINT));
+		$customers = [];
+		foreach($this->accounts as $account_number => $customer_data){
+			$customer_data[CUSTOMER::ACCOUNT_NUMBER] = $account_number;
+			$customers[] = $customer_data;
+		}
+		file_put_contents('Account_details.json', json_encode($customers, JSON_PRETTY_PRINT));
 	}
 }

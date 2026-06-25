@@ -1,9 +1,9 @@
 <?php
 
 require_once 'Card.php';
+require_once 'ArrayConvertion.php';
 
-
-class CreditCard extends Card
+class CreditCard extends Card implements ArrayConvertion
 {
 	public static function fromArray(array $data): CreditCard
 	{

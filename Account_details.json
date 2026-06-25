@@ -1,10 +1,9 @@
-{
-    "1001234": {
-        "name": "shaa",
+[
+    {
+        "name": "test",
         "mobile": "9876543210",
         "aadhar": "123456789012",
         "pan": "ABCDE1234F",
-        "account_number": "1001234",
         "cards": [
             {
                 "cardType": "Credit",
@@ -14,76 +13,47 @@
             },
             {
                 "cardType": "Debit",
-                "cardNumber": "3211415801693251",
+                "cardNumber": "2575534793466166",
                 "isactive": true,
-                "expirationDate": "2029-06-18"
+                "expirationDate": "2029-06-24"
+            }
+        ],
+        "accountNo": 1001
+    },
+    {
+        "name": "shaha",
+        "mobile": "8015134458",
+        "aadhar": "903412456789",
+        "pan": "DEFGH3456J",
+        "accountNo": 1002,
+        "cards": [
+            {
+                "cardType": "Debit",
+                "cardNumber": "6582349236409381",
+                "isactive": true,
+                "expirationDate": "2029-06-24"
+            },
+            {
+                "cardType": "Credit",
+                "cardNumber": "4499039484998416",
+                "isactive": true,
+                "expirationDate": "2029-06-24"
             }
         ]
     },
-    "1005678": {
+    {
         "name": "kavya",
-        "mobile": "9123456789",
-        "aadhar": "987654321012",
-        "pan": "FGHIJ5678K",
+        "mobile": "9754351278",
+        "aadhar": "7954861450",
+        "pan": "TRYPA6789N",
         "cards": [
             {
                 "cardType": "Debit",
-                "cardNumber": "6316910244191271",
+                "cardNumber": "3333379580707417",
                 "isactive": true,
-                "expirationDate": "2029-06-23"
-            },
-            {
-                "cardType": "Credit",
-                "cardNumber": "1106316905417931",
-                "isactive": true,
-                "expirationDate": "2029-06-23"
+                "expirationDate": "2029-06-24"
             }
-        ]
-    },
-    "1009012": {
-        "name": "Sathish",
-        "mobile": "9988776655",
-        "aadhar": "567890123456",
-        "pan": "JKLMN5678P",
-        "cards": [
-            {
-                "cardType": "Debit",
-                "cardNumber": "6666777788889999",
-                "isactive": false,
-                "expirationDate": "2026-06-20"
-            },
-            {
-                "cardType": "Credit",
-                "cardNumber": "1176425719320431",
-                "isactive": true,
-                "expirationDate": "2029-06-22"
-            },
-            {
-                "cardType": "Debit",
-                "cardNumber": "1841883499714988",
-                "isactive": true,
-                "expirationDate": "2029-06-23"
-            }
-        ]
-    },
-    "1013456": {
-        "name": "sneha",
-        "mobile": "9871234567",
-        "aadhar": "789012345678",
-        "pan": "PQRST1234U",
-        "cards": [
-            {
-                "cardType": "Credit",
-                "cardNumber": "7777888899990000",
-                "isactive": false,
-                "expirationDate": "2026-01-15"
-            },
-            {
-                "cardType": "Credit",
-                "cardNumber": "9481049118499577",
-                "isactive": true,
-                "expirationDate": "2028-06-17"
-            }
-        ]
+        ],
+        "accountNo": 1003
     }
-}
+]

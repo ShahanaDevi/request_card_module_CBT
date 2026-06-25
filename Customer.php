@@ -3,7 +3,7 @@
 require_once 'DebitCard.php';
 require_once 'CreditCard.php';
 
-class Customer
+class Customer 
 {
 	public const ACCOUNT_NUMBER = 'accountNo';
 	public const NAME = 'name';
@@ -57,6 +57,7 @@ class Customer
 			self::MOBILE => $this->mobile,
 			self::AADHAR => $this->aadhar,
 			self::PAN => $this->pan,
+			self::ACCOUNT_NUMBER => $this->account_number,
 			self::CARDS => $cards
 		];
 	}
