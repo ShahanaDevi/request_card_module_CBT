@@ -7,7 +7,7 @@ class CreditCard extends Card implements ArrayConvertion
 {
 	public static function fromArray(array $data): CreditCard
 	{
-		return new CreditCard($data['cardNumber'], $data['isactive'], $data['expirationDate']);
+		return new CreditCard($data['id'], $data['cardNumber'], $data['isactive'], $data['expirationDate']);
 	}
 
 	public function getCardType(): string
@@ -18,6 +18,7 @@ class CreditCard extends Card implements ArrayConvertion
 	public function toArray(): array
 	{
 		return [
+			'id' => $this->id,
 			'cardType' => 'Credit',
 			'cardNumber' => $this->card_number,
 			'isactive' => $this->is_active,

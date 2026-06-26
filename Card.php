@@ -3,12 +3,14 @@
 abstract class Card
 {
 
+	protected int $id;
 	protected string $card_number;
 	protected bool $is_active;
 	protected string $expiration_date;
 
-	public function __construct(string $card_number, bool $is_active, string $expiration_date)
+	public function __construct(int $id, string $card_number, bool $is_active, string $expiration_date)
 	{
+		$this->id = $id;
 		$this->card_number = $card_number;
 		$this->is_active = $is_active;
 		$this->expiration_date = $expiration_date;
@@ -26,6 +28,11 @@ abstract class Card
 	/**
 	 * Getter and Setter
 	 */
+	public function getId(): int
+	{
+		return $this->id;
+	}
+
 	public function getCardNumber(): string
 	{
 		return $this->card_number;

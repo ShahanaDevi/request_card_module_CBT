@@ -3,6 +3,9 @@
 require_once 'Customer.php';
 require_once 'Card.php';
 require_once 'ValidationTrait.php';
+require_once 'Database.php';
+require_once 'CustomerRepository.php';
+require_once 'CardRepository.php';
 
 
 class CardRequest
@@ -10,6 +13,9 @@ class CardRequest
 
 	use ValidationTrait;
 	private array $accounts = [];
+	private mysqli $connection;
+	private CustomerRepository $customerRepository;
+    private CardRepository $cardRepository;
 
 	/**
 	 * loads Account_details.json into $accounts
@@ -17,16 +23,24 @@ class CardRequest
 	 */
 	public function __construct()
 	{
-		$content = file_get_contents('Account_details.json');
-		$customers = json_decode($content, true) ?? [];
 
-		foreach ($customers as $customer) {
-			// $customer
-			$account_number = $customer[Customer::ACCOUNT_NUMBER];
-			unset($customer[Customer::ACCOUNT_NUMBER]);
+	    $database = new Database();
+		$connection = $database->getConnection();
+		echo "Database Connected\n";
 
-			$this->accounts[$account_number] = $customer;
-		}
+        $this->customerRepository = new CustomerRepository($connection);
+        $this->cardRepository = new CardRepository($connection);
+		// $content = file_get_contents('Account_details.json');
+		// // get data from DB
+		// $customers = json_decode($content, true) ?? [];
+
+		// foreach ($customers as $customer) {
+		// 	// $customer
+		// 	$account_number = $customer[Customer::ACCOUNT_NUMBER];
+		// 	unset($customer[Customer::ACCOUNT_NUMBER]);
+
+		// 	$this->accounts[$account_number] = $customer;
+		// }
 	}
 
 	/**
@@ -51,7 +65,7 @@ class CardRequest
 				break;
 
 			case 2:
-				$this->updateCustomer($_customer);
+				$this->customerRepository->updateCustomer($_customer);
 				break;
 
 			case 3:
@@ -89,18 +103,19 @@ class CardRequest
 	 */
 	private function validateCustomer(array $_user): Customer
 	{
+		$customer = $this->customerRepository->findByAccountNumber($_user[Customer::ACCOUNT_NUMBER]);
 
-		if (!isset($this->accounts[$_user[Customer::ACCOUNT_NUMBER]])) {
+    	if ($customer === null)
+		{
 			exit("Account not found.\n");
-		}
+    	}
 
-		$_record = $this->accounts[$_user[Customer::ACCOUNT_NUMBER]];
-
-		if (!$this->isNameMatch($_user[Customer::NAME], $_record[Customer::NAME])) {
+    	if (!$this->isNameMatch($_user[Customer::NAME], $customer->getName())) 
+		{
 			exit("Name does not match our records.\n");
 		}
-
-		return Customer::fromArray($_user[Customer::ACCOUNT_NUMBER], $_record);
+		
+		return $customer;
 	}
 
 	/**
@@ -153,9 +168,13 @@ class CardRequest
 			}
 		}
 
-		$cards[] = new DebitCard(Card::generateCardNumber(), true, date('Y-m-d', strtotime('+3 years')));
+		$new_card = new DebitCard(0, Card::generateCardNumber(), true, date('Y-m-d', strtotime('+3 years')));
+
+		$cards[] = $new_card;
 
 		$_customer->setCards($cards);
+
+		$this->cardRepository->saveCard($_customer->getID(), $new_card);
 
 		echo "New Debit Card Issued Successfully.\n";
 	}
@@ -182,7 +201,11 @@ class CardRequest
 			}
 		}
 
-		$cards[] = new CreditCard(Card::generateCardNumber(), true, date('Y-m-d', strtotime('+3 years')));
+		$new_card = new CreditCard(0, Card::generateCardNumber(), true, date('Y-m-d', strtotime('+3 years')));
+
+		$cards[] = $new_card;
+
+		$this->cardRepository->saveCard($_customer->getId(), $new_card);
 
 		$_customer->setCards($cards);
 

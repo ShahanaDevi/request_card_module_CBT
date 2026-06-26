@@ -13,6 +13,7 @@ class Customer
 	public const CARDS = 'cards';
 
 
+	private int $id;
 	private string $account_number;
 	private string $name;
 	private string $mobile;
@@ -20,8 +21,9 @@ class Customer
 	private string $pan;
 	private array $cards;
 
-	public function __construct(string $account_number, string $_name, string $_mobile, string $_aadhar, string $_pan, array $_cards = [])
+	public function __construct(int $id, string $account_number, string $_name, string $_mobile, string $_aadhar, string $_pan, array $_cards = [])
 	{
+		$this->id = $id;
 		$this->account_number = $account_number;
 		$this->name = $_name;
 		$this->mobile = $_mobile;
@@ -42,7 +44,7 @@ class Customer
 			}
 		}
 
-		return new Customer($account_number, $data[self::NAME], $data[self::MOBILE], $data[self::AADHAR], $data[self::PAN], $cards);
+		return new Customer($data['id'], $account_number, $data[self::NAME], $data[self::MOBILE], $data[self::AADHAR], $data[self::PAN], $cards);
 	}
 
 	public function toArray(): array
@@ -53,6 +55,7 @@ class Customer
 			$cards[] = $card->toArray();
 		}
 		return [
+			'id' => $this->id,
 			self::NAME => $this->name,
 			self::MOBILE => $this->mobile,
 			self::AADHAR => $this->aadhar,
@@ -65,6 +68,11 @@ class Customer
 	/**
 	 * Getter ans Setter
 	 */
+	public function getId(): int
+	{
+		return $this->id;
+	}
+
 	public function getAccountNumber(): string
 	{
 		return $this->account_number;
