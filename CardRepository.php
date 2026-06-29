@@ -1,9 +1,12 @@
 <?php
 
+require_once 'DebitCard.php';
+require_once 'CreditCard.php';
+
 class CardRepository
 {
     private mysqli $connection;
-    
+
 
     public function __construct(mysqli $connection)
     {
@@ -12,16 +15,28 @@ class CardRepository
 
     public function getCardsByCustomerId(int $customer_id): array
     {
-         $query = "SELECT * FROM cards WHERE customer_id = ?";
-         
-         $statement = $this->connection->prepare($query);
-         
-         $statement->bind_param('i', $customer_id);
-         
-         $statement->execute();
+        $query = "SELECT * FROM cards WHERE customer_id = ?";
 
-        return $statement->get_result()->fetch_all(MYSQLI_ASSOC);
+        $statement = $this->connection->prepare($query);
+
+        $statement->bind_param('i', $customer_id);
+
+        $statement->execute();
+        $result = $statement->get_result();
+
+        $cards = [];
+
+        while ($row = $result->fetch_assoc()) {
+            if ($row['card_type'] == 'Debit') {
+                $cards[] = DebitCard::fromArray(['id' => $row['id'], 'cardNumber' => $row['card_number'], 'isactive' => (bool)$row['is_active'], 'expirationDate' => $row['expiration_date']]);
+            } else {
+                $cards[] = CreditCard::fromArray(['id' => $row['id'], 'cardNumber' => $row['card_number'], 'isactive' => (bool)$row['is_active'], 'expirationDate' => $row['expiration_date']]);
+            }
+        }
+
+        return $cards;
     }
+
 
     public function saveCard(int $customer_id, Card $card): void
     {
@@ -38,4 +53,3 @@ class CardRepository
         $statement->execute();
     }
 }
-?>

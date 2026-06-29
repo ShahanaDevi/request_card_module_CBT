@@ -50,6 +50,7 @@ class CardRequest
 	public function run(): void
 	{
 		$_user = $this->getUserInput();
+		// get data from post request
 
 		$_customer = $this->validateCustomer($_user);
 
@@ -153,7 +154,7 @@ class CardRequest
 	private function requestDebitCard(Customer $_customer): void
 	{
 		$cards = $_customer->getCards();
-
+    
 		foreach ($cards as $card) {
 
 			if ($card->getCardType() === 'Debit' && $card->isActive()) {
@@ -243,11 +244,6 @@ class CardRequest
 	{
 		$this->accounts[$_customer->getAccountNumber()] = $_customer->toArray();
 
-		$customers = [];
-		foreach($this->accounts as $account_number => $customer_data){
-			$customer_data[CUSTOMER::ACCOUNT_NUMBER] = $account_number;
-			$customers[] = $customer_data;
-		}
-		file_put_contents('Account_details.json', json_encode($customers, JSON_PRETTY_PRINT));
+		$this->customerRepository->updateCustomer($_customer);
 	}
 }

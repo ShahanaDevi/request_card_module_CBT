@@ -6,7 +6,7 @@ class database
 
     public function __construct()
     {
-        $this->connection = new mysqli('localhost', 'root', 'server@123SQL', 'card_module');
+        $this->connection = new mysqli('localhost', 'root', 'SQL@123', 'card_module');
 
         if ($this->connection->connect_error) {
             die("Connection Error: " . $this->connection->connect_error);

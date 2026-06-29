@@ -1,12 +1,17 @@
 <?php
 
+require_once 'Customer.php';
+require_once 'CardRepository.php';
+
 class CustomerRepository
 {
     private mysqli $connection;
+    private CardRepository $cardRepository;
 
     public function __construct(mysqli $connection)
     {
         $this->connection = $connection;
+        $this->cardRepository = new CardRepository($connection);
     }
 
     public function findByAccountNumber(string $account_number): ?Customer
@@ -25,7 +30,9 @@ class CustomerRepository
             return null;
         }
 
-        return Customer::fromArray($data['account_number'], $data);
+        $cards = $this->cardRepository->getCardsByCustomerId($data['id']);
+
+        return Customer::fromArray($data, $cards);
        
     }
 

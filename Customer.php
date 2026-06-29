@@ -5,7 +5,7 @@ require_once 'CreditCard.php';
 
 class Customer 
 {
-	public const ACCOUNT_NUMBER = 'accountNo';
+	public const ACCOUNT_NUMBER = 'account_number';
 	public const NAME = 'name';
 	public const MOBILE = 'mobile';
 	public const AADHAR = 'aadhar';
@@ -32,19 +32,10 @@ class Customer
 		$this->cards = $_cards;
 	}
 
-	public static function fromArray(string $account_number, array $data): Customer
+	public static function fromArray(array $data, array $cards = []): Customer
 	{
-		$cards = [];
-
-		foreach ($data[self::CARDS] as $card_data) {
-			if ($card_data['cardType'] === 'Debit') {
-				$cards[] = DebitCard::fromArray($card_data);
-			} else {
-				$cards[] = CreditCard::fromArray($card_data);
-			}
-		}
-
-		return new Customer($data['id'], $account_number, $data[self::NAME], $data[self::MOBILE], $data[self::AADHAR], $data[self::PAN], $cards);
+		
+		return new Customer($data['id'], $data[self::ACCOUNT_NUMBER], $data[self::NAME], $data[self::MOBILE], $data[self::AADHAR], $data[self::PAN], $cards);
 	}
 
 	public function toArray(): array

@@ -1,18 +1,18 @@
 [
     {
-        "id": 3,
-        "name": "keerthi",
-        "mobile": "7225689302",
-        "aadhar": "657832109991",
-        "pan": "KEERT4567H",
-        "accountNo": 1003,
+        "id": 1,
+        "name": "Shahana",
+        "mobile": "8015135548",
+        "aadhar": "687945321043",
+        "pan": "ASHAH1234S",
+        "accountNo": 1001,
         "cards": [
             {
                 "id": 0,
-                "cardType": "Credit",
-                "cardNumber": "6613671974231118",
+                "cardType": "Debit",
+                "cardNumber": "2400042448929331",
                 "isactive": true,
-                "expirationDate": "2029-06-26"
+                "expirationDate": "2029-06-29"
             }
         ]
     }
