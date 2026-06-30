@@ -166,6 +166,7 @@ class CardRequest
 				}
 
 				$card->setActive(false);
+				$this->cardRepository->updateCardStatus($card->getId(), false);
 			}
 		}
 
@@ -199,6 +200,7 @@ class CardRequest
 				}
 
 				$card->setActive(false);
+				$this->cardRepository->updateCardStatus($card->getId(), false);
 			}
 		}
 
